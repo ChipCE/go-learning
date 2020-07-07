@@ -1,201 +1,115 @@
 
 
-1. Go言語選択理由
+## 1. Go言語選択理由
 
 - クロスプラットフォーム
 - パッケージ管理
+- Web系開発や
 - 標準ライブラリが整備されている
+  - Jsonをオブジェクト化
 
-Jsonをデコードする
-<pre>
-import "encoding/json"
-//...
-
-// ... 
-myJsonString := `{"some":"json"}`
-var myStoredVariable
-json.Unmarshal([]byte(myJsonString), &myStoredVariable)
-//...
-</pre>
-
-
-Jsonをオブジェクト化
-
-<pre>
-type TestJsonObj struct {
-  Id int `json:id`
-  Content interface `json:content`
-}
-sampleJson := `{"id": "1","content": "{"data1":10,"data2":20}"}`
-var testJsonObj TestJsonObj	
-json.Unmarshal([]byte(sampleJson), &testJsonObj)
-fmt.Printf("Id: %s, Content: %s", testJsonObj.Id, testJsonObj.Content)
+<pre>      type TestJsonObj struct {
+        Id int `json:id`
+        Content interface `json:content`
+      }
+      sampleJson := `{"id": "1","content": "{"data1":10,"data2":20}"}`
+      var testJsonObj TestJsonObj	
+      json.Unmarshal([]byte(sampleJson), &testJsonObj)
+      fmt.Printf("Id: %s, Content: %s", testJsonObj.Id, testJsonObj.Content)
 </pre>
 - 処理速度
 
 ## 2. ベンチマーク
 
-### 2.1 ウェブフレームワーク
-
 #### システムスペック
+
 
 |    |    |
 |----|:---|
-| Processor | Intel(R) Core(TM) i7-8750H CPU @ 2.20GHz |
-| RAM | 15.85 GB |
-| OS | Microsoft Windows 10 Pro for Workstations |
+| Processor | 2vCPU Intel(R) Xeon(R) CPU E3-1240 v6 @ 3.70GHz |
+| RAM | 1.8 GB |
+| OS | centos |
 | [Bombardier](https://github.com/codesenberg/bombardier) | v1.2.4 |
-| [Go](https://golang.org) | go1.14.2 |
-| [.Net Core](https://dotnet.microsoft.com/) | 3.1.102 |
-| [Node.js](https://nodejs.org/) | v13.10.1 |
+| [Go](https://golang.org) | go1.14.4 |
+| [.Net Core](https://dotnet.microsoft.com/) | 3.1.301 |
+| [Node.js](https://nodejs.org/) | v10.21.0 |
 
-> Last updated: Apr 12, 2020 at 2:41am (UTC)
 
-#### Static
-
-リクエスト数　: 1000000
-レスポンス: 固定のページ
+📖 Fires 1000000 requests, receives a static message as response.
 
 | Name | Language | Reqs/sec | Latency | Throughput | Time To Complete |
 |------|:---------|:---------|:--------|:-----------|:-----------------|
-| [Iris](https://github.com/kataras/iris) | Go |205603 |606.83us |35.86MB |4.87s |
-| [Kestrel](https://github.com/dotnet/aspnetcore) | C# |194821 |639.91us |33.06MB |5.13s |
-| [Chi](https://github.com/pressly/chi) | Go |192223 |648.71us |33.54MB |5.20s |
-| [Gin](https://github.com/gin-gonic/gin) | Go |187246 |666.13us |32.67MB |5.34s |
-| [Echo](https://github.com/labstack/echo) | Go |185804 |671.59us |32.40MB |5.39s |
-| [Martini](https://github.com/go-martini/martini) | Go |160296 |777.36us |27.98MB |6.24s |
-| [Koa](https://github.com/koajs/koa) | Javascript |107892 |1.14ms |21.53MB |9.17s |
-| [Express](https://github.com/expressjs/express) | Javascript |91181 |1.44ms |22.20MB |11.60s |
-| [Buffalo](https://github.com/gobuffalo/buffalo) | Go |39010 |3.20ms |6.81MB |25.63s |
+| [Martini](https://github.com/go-martini/martini) | Go |55952 |2.25ms |9.97MB |17.98s |
+| [Echo](https://github.com/labstack/echo) | Go |55443 |2.25ms |9.95MB |18.03s |
+| [Chi](https://github.com/pressly/chi) | Go |55402 |2.25ms |9.94MB |18.04s |
+| [Gin](https://github.com/gin-gonic/gin) | Go |54888 |2.27ms |9.85MB |18.21s |
+| [Iris](https://github.com/kataras/iris) | Go |54783 |2.28ms |9.84MB |18.23s |
+| [Buffalo](https://github.com/gobuffalo/buffalo) | Go |54636 |2.28ms |9.81MB |18.28s |
+| [Kestrel](https://github.com/dotnet/aspnetcore) | C# |53492 |2.33ms |9.59MB |18.69s |
+| [Express](https://github.com/expressjs/express) | Javascript |27593 |4.54ms |4.94MB |36.30s |
+| [Koa](https://github.com/koajs/koa) | Javascript |27489 |4.54ms |4.93MB |36.35s |
 
-#### Parameterized
-
-リクエスト数　: 250000
-レスポンス : 送信のパラメータのデータ表示
+📖 Fires 1000000 requests, receives a static message as response.
 
 | Name | Language | Reqs/sec | Latency | Throughput | Time To Complete |
 |------|:---------|:---------|:--------|:-----------|:-----------------|
-| [Iris](https://github.com/kataras/iris) | Go |192088 |649.16us |36.78MB |1.30s |
-| [Chi](https://github.com/pressly/chi) | Go |187973 |663.14us |36.00MB |1.33s |
-| [Echo](https://github.com/labstack/echo) | Go |177471 |703.68us |33.96MB |1.41s |
-| [Kestrel](https://github.com/dotnet/aspnetcore) | C# |172411 |728.64us |31.78MB |1.46s |
-| [Gin](https://github.com/gin-gonic/gin) | Go |169312 |740.39us |32.27MB |1.48s |
-| [Martini](https://github.com/go-martini/martini) | Go |145707 |0.85ms |27.94MB |1.71s |
-| [Koa](https://github.com/koajs/koa) | Javascript |74756 |1.67ms |15.99MB |3.35s |
-| [Express](https://github.com/expressjs/express) | Javascript |65553 |2.20ms |15.57MB |4.41s |
-| [Buffalo](https://github.com/gobuffalo/buffalo) | Go |38577 |3.24ms |7.40MB |6.48s |
+| [Chi](https://github.com/pressly/chi) | Go |55789 |2.23ms |10.03MB |17.88s |
+| [Martini](https://github.com/go-martini/martini) | Go |55765 |2.24ms |10.02MB |17.90s |
+| [Echo](https://github.com/labstack/echo) | Go |55626 |2.24ms |9.99MB |17.95s |
+| [Gin](https://github.com/gin-gonic/gin) | Go |55452 |2.25ms |9.94MB |18.03s |
+| [Iris](https://github.com/kataras/iris) | Go |54835 |2.28ms |9.83MB |18.23s |
+| [Buffalo](https://github.com/gobuffalo/buffalo) | Go |54520 |2.29ms |9.79MB |18.32s |
+| [Kestrel](https://github.com/dotnet/aspnetcore) | C# |53590 |2.33ms |9.61MB |18.66s |
+| [Express](https://github.com/expressjs/express) | Javascript |27563 |4.54ms |4.94MB |36.31s |
+| [Koa](https://github.com/koajs/koa) | Javascript |26985 |4.64ms |4.83MB |37.13s |
 
-#### Sessions
-
-リクエスト数　: 250000
-レスポンス : セッション値を設定、その値を表示
+📖 Fires 1000000 requests, receives a static message as response.
 
 | Name | Language | Reqs/sec | Latency | Throughput | Time To Complete |
 |------|:---------|:---------|:--------|:-----------|:-----------------|
-| [Iris](https://github.com/kataras/iris) | Go |102580 |1.22ms |35.22MB |2.44s |
-| [Kestrel](https://github.com/dotnet/aspnetcore) | C# |74056 |1.69ms |34.07MB |3.39s |
-| [Echo](https://github.com/labstack/echo) | Go |73521 |1.70ms |38.14MB |3.40s |
-| [Chi](https://github.com/pressly/chi) | Go |67068 |1.86ms |34.77MB |3.73s |
-| [Martini](https://github.com/go-martini/martini) | Go |66955 |1.86ms |34.81MB |3.73s |
-| [Gin](https://github.com/gin-gonic/gin) | Go |60140 |2.10ms |24.95MB |4.20s |
-| [Koa](https://github.com/koajs/koa) | Javascript |52796 |2.75ms |20.47MB |5.51s |
-| [Express](https://github.com/expressjs/express) | Javascript |31982 |4.27ms |7.82MB |8.56s |
-| [Buffalo](https://github.com/gobuffalo/buffalo) | Go |16548 |7.55ms |23.74MB |15.11s |
+| [Chi](https://github.com/pressly/chi) | Go |57973 |2.15ms |10.39MB |17.25s |
+| [Martini](https://github.com/go-martini/martini) | Go |57854 |2.16ms |10.38MB |17.28s |
+| [Echo](https://github.com/labstack/echo) | Go |57733 |2.16ms |10.36MB |17.30s |
+| [Iris](https://github.com/kataras/iris) | Go |57107 |2.19ms |10.24MB |17.51s |
+| [Gin](https://github.com/gin-gonic/gin) | Go |56879 |2.19ms |10.21MB |17.56s |
+| [Buffalo](https://github.com/gobuffalo/buffalo) | Go |56665 |2.20ms |10.17MB |17.63s |
+| [Kestrel](https://github.com/dotnet/aspnetcore) | C# |55971 |2.23ms |10.03MB |17.87s |
+| [Koa](https://github.com/koajs/koa) | Javascript |28810 |4.34ms |5.16MB |34.74s |
+| [Express](https://github.com/expressjs/express) | Javascript |27406 |4.56ms |4.91MB |36.50s |
 
-#### REST
 
-リクエスト数　: 200000
-レスポンス : ランダムのJsonを送信、受信したjsonを返す
+📖 Fires 1000000 requests, receives a static message as response.
 
 | Name | Language | Reqs/sec | Latency | Throughput | Time To Complete |
 |------|:---------|:---------|:--------|:-----------|:-----------------|
-| [Iris](https://github.com/kataras/iris) | Go |147754 |843.88us |40.43MB |1.35s |
-| [Chi](https://github.com/pressly/chi) | Go |141918 |0.88ms |38.15MB |1.41s |
-| [Kestrel](https://github.com/dotnet/aspnetcore) | C# |136747 |0.92ms |39.68MB |1.47s |
-| [Gin](https://github.com/gin-gonic/gin) | Go |136480 |0.91ms |37.32MB |1.47s |
-| [Echo](https://github.com/labstack/echo) | Go |134209 |0.93ms |36.84MB |1.49s |
-| [Martini](https://github.com/go-martini/martini) | Go |123638 |1.01ms |33.22MB |1.62s |
-| [Buffalo](https://github.com/gobuffalo/buffalo) | Go |56722 |2.20ms |15.56MB |3.53s |
-| [Koa](https://github.com/koajs/koa) | Javascript |47089 |2.66ms |13.91MB |4.26s |
-| [Express](https://github.com/expressjs/express) | Javascript |41018 |3.29ms |13.59MB |5.28s |
+| [Chi](https://github.com/pressly/chi) | Go |58488 |2.13ms |10.49MB |17.10s |
+| [Echo](https://github.com/labstack/echo) | Go |58427 |2.15ms |10.43MB |17.19s |
+| [Iris](https://github.com/kataras/iris) | Go |58064 |2.15ms |10.42MB |17.21s |
+| [Buffalo](https://github.com/gobuffalo/buffalo) | Go |57991 |2.15ms |10.41MB |17.23s |
+| [Martini](https://github.com/go-martini/martini) | Go |57971 |2.15ms |10.41MB |17.22s |
+| [Gin](https://github.com/gin-gonic/gin) | Go |57736 |2.16ms |10.36MB |17.30s |
+| [Kestrel](https://github.com/dotnet/aspnetcore) | C# |55902 |2.23ms |10.03MB |17.88s |
+| [Koa](https://github.com/koajs/koa) | Javascript |28973 |4.32ms |5.19MB |34.56s |
+| [Express](https://github.com/expressjs/express) | Javascript |28439 |4.40ms |5.09MB |35.25s |
+
+📖 Fires 1000000 requests, receives a static message as response.
+
+| Name | Language | Reqs/sec | Latency | Throughput | Time To Complete |
+|------|:---------|:---------|:--------|:-----------|:-----------------|
+| [Chi](https://github.com/pressly/chi) | Go |57905 |2.16ms |10.36MB |17.31s |
+| [Martini](https://github.com/go-martini/martini) | Go |57900 |2.16ms |10.39MB |17.26s |
+| [Echo](https://github.com/labstack/echo) | Go |57693 |2.16ms |10.35MB |17.32s |
+| [Iris](https://github.com/kataras/iris) | Go |57151 |2.18ms |10.26MB |17.48s |
+| [Gin](https://github.com/gin-gonic/gin) | Go |56759 |2.20ms |10.18MB |17.61s |
+| [Buffalo](https://github.com/gobuffalo/buffalo) | Go |56647 |2.20ms |10.18MB |17.62s |
+| [Kestrel](https://github.com/dotnet/aspnetcore) | C# |55902 |2.23ms |10.03MB |17.88s |
+| [Express](https://github.com/expressjs/express) | Javascript |28821 |4.34ms |5.16MB |34.77s |
+| [Koa](https://github.com/koajs/koa) | Javascript |28079 |4.45ms |5.03MB |35.64s |
 
 
-参考資料:https://github.com/kataras/server-benchmarks/blob/master/README.md
 
-### 2.2 Go - Iris vs .NetCore - Kestrel
+## 3.　言語トレンド
 
+参考資料: https://hotframeworks.com/
 
-#### システムスペック
-
-|    |    |
-|----|:---|
-| Processor | Intel(R) Core(TM) i7–4710HQ CPU @ 2.50GHz 2.50GHz |
-| RAM | 8GB GB |
-| OS | Microsoft Windows 10 Pro for Workstations |
-| [Bombardier](https://github.com/codesenberg/bombardier) | v1.2.4 |
-| [Go](https://golang.org) | go1.8.3 |
-| [.Net Core](https://dotnet.microsoft.com/) | 2.0 |
-
-#### HTTPリクエスト
-<code>Kestrel</code>
-<pre>
-$ bombardier -c 125 -n 5000000 http://localhost:5000/api/values/5
-Bombarding http://localhost:5000/api/values/5 with 5000000 requests using 125 connections
- 5000000 / 5000000 [=====================================================] 100.00% 2m3s
-Done!
-Statistics        Avg      Stdev        Max
-  Reqs/sec     40226.03    8724.30     161919
-  Latency        3.09ms     1.40ms   169.12ms
-  HTTP codes:
-    1xx - 0, 2xx - 5000000, 3xx - 0, 4xx - 0, 5xx - 0
-    others - 0
-  Throughput:     8.91MB/s
-</pre>
-
-<code>Iris</code>
-<pre>
-$ bombardier -c 125 -n 5000000 http://localhost:5000/api/values/5
-Bombarding http://localhost:5000/api/values/5 with 5000000 requests using 125 connections
- 5000000 / 5000000 [======================================================] 100.00% 47s
-Done!
-Statistics        Avg      Stdev        Max
-  Reqs/sec    105643.81    7687.79     122564
-  Latency        1.18ms   366.55us    22.01ms
-  HTTP codes:
-    1xx - 0, 2xx - 5000000, 3xx - 0, 4xx - 0, 5xx - 0
-    others - 0
-  Throughput:    19.65MB/s
-</pre>
-
-
-#### MVCテンプレート
-
-<code>Kestrel</code>
-<pre>
-Bombarding http://localhost:5000 with 1000000 requests using 125 connections
- 1000000 / 1000000 [====================================================] 100.00% 1m20s
-Done!
-Statistics Avg Stdev Max
- Reqs/sec 11738.60 7741.36 125887
- Latency 10.10ms 22.10ms 1.97s
- HTTP codes:
- 1xx — 0, 2xx — 1000000, 3xx — 0, 4xx — 0, 5xx — 0
- others — 0
- Throughput: 89.03MB/s
-</pre>
-
-<code>Iris</code>
-<pre>
-Bombarding http://localhost:5000 with 1000000 requests using 125 connections
- 1000000 / 1000000 [======================================================] 100.00% 37s
-Done!
-Statistics Avg Stdev Max
- Reqs/sec 26656.76 1944.73 31188
- Latency 4.69ms 1.20ms 22.52ms
- HTTP codes:
- 1xx — 0, 2xx — 1000000, 3xx — 0, 4xx — 0, 5xx — 0
- others — 0
- Throughput: 192.51MB/s
-</pre>
-
-参考資料:https://medium.com/hackernoon/go-vs-net-core-in-terms-of-http-performance-7535a61b67b8
+![alt text](./framework-rank-chart.png "Rank")

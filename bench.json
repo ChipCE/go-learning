@@ -1,0 +1,81 @@
+{
+    "spec": {
+        "numberOfConnections": 125,
+        "testType": "number-of-requests",
+        "numberOfRequests": 1000000,
+        "method": "GET",
+        "url": "http://localhost:8000/test",
+        "body": "",
+        "stream": false,
+        "timeoutSeconds": 2,
+        "client": "fasthttp"
+    },
+    "result": {
+        "bytesRead": 145000000,
+        "bytesWritten": 66000000,
+        "timeTakenSeconds": 192.84756274,
+        "req1xx": 0,
+        "req2xx": 1000000,
+        "req3xx": 0,
+        "req4xx": 0,
+        "req5xx": 0,
+        "others": 0,
+        "latency": {
+            "mean": 24103.108266,
+            "stddev": 20173.45137464318,
+            "max": 527286
+        },
+        "rps": {
+            "mean": 5193.438779844259,
+            "stddev": 7834.820948636827,
+            "max": 92396.31391762773,
+            "percentiles": {
+                "50": 3601.122110,
+                "75": 3801.091864,
+                "90": 5589.897657,
+                "95": 11034.913362,
+                "99": 48861.216952
+            }
+        }
+    }
+},
+{
+    "spec": {
+        "numberOfConnections": 250,
+        "testType": "number-of-requests",
+        "numberOfRequests": 1000000,
+        "method": "GET",
+        "url": "http://localhost:8000/test",
+        "body": "",
+        "stream": false,
+        "timeoutSeconds": 2,
+        "client": "fasthttp"
+    },
+    "result": {
+        "bytesRead": 145000000,
+        "bytesWritten": 66000000,
+        "timeTakenSeconds": 166.333840697,
+        "req1xx": 0,
+        "req2xx": 1000000,
+        "req3xx": 0,
+        "req4xx": 0,
+        "req5xx": 0,
+        "others": 0,
+        "latency": {
+            "mean": 41578.862334,
+            "stddev": 41782.71263390073,
+            "max": 753531
+        },
+        "rps": {
+            "mean": 6016.447317252158,
+            "stddev": 9839.971475351882,
+            "max": 91323.32253383697,
+            "percentiles": {
+                "50": 3600.945068,
+                "75": 3804.116054,
+                "90": 9204.971145,
+                "95": 24334.175563,
+                "99": 58100.177338
+            }
+        }
+    }
