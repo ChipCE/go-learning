@@ -1,7 +1,9 @@
 package main
 
-import "gin-example/plugins/plugina"
-import "gin-example/plugins/pluginb"
+import (
+	"gin-example/plugins/plugina"
+	"gin-example/plugins/pluginb"
+)
 
 func main() {
 	go plugina.StartOne()

@@ -1,0 +1,27 @@
+{
+    "config_version" : 1.0,
+    "plugins":[
+        {
+            "name" : "plugin_a",
+            "enable" : true,
+            "address" : "",
+            "port" : 8000,
+            "readTimeout" : 500,
+            "writeTimeout" : 500
+        },
+        {
+            "name" : "plugin_b",
+            "enable" : true,
+            "port" : 8001,
+            "readTimeout" : 500,
+            "writeTimeout" : 500
+        },
+        {
+            "name" : "plugin_c",
+            "enable" : true,
+            "port" : 8001,
+            "readTimeout" : 500,
+            "writeTimeout" : 500
+        }
+    ]
+}
