@@ -1,3 +1,6 @@
+## Single
+
+<pre>
 {
     "spec": {
         "numberOfConnections": 125,
@@ -38,7 +41,10 @@
             }
         }
     }
-},
+}
+</pre>
+
+<pre>
 {
     "spec": {
         "numberOfConnections": 250,
@@ -79,10 +85,14 @@
             }
         }
     }
+}
+</pre>
 
-2 plugins 
+## Gorountines 
+
 Ram : 21.5MB
 
+<pre>
 ./bombardier -c 250 -n 1000000 -t 2s -m GET --format=json --print=result http://localhost:8000/
 {
     "spec": {
@@ -125,7 +135,9 @@ Ram : 21.5MB
         }
     }
 }
+</pre>
 
+<pre>
 ./bombardier -c 250 -n 1000000 -t 2s -m GET --format=json --print=result http://localhost:8001/
 {
     "spec": {
@@ -168,3 +180,280 @@ Ram : 21.5MB
         }
     }
 }
+
+</pre>
+
+## micro service
+
+<pre>
+./bombardier -c 250 -n 1000000 -t 2s -m GET --format=json --print=result http://localhost:8001
+{
+    "spec": {
+        "numberOfConnections": 250,
+        "testType": "number-of-requests",
+        "numberOfRequests": 1000000,
+        "method": "GET",
+        "url": "http://localhost:8001",
+        "body": "",
+        "stream": false,
+        "timeoutSeconds": 2,
+        "client": "fasthttp"
+    },
+    "result": {
+        "bytesRead": 145000000,
+        "bytesWritten": 62000000,
+        "timeTakenSeconds": 107.137383175,
+        "req1xx": 0,
+        "req2xx": 1000000,
+        "req3xx": 0,
+        "req4xx": 0,
+        "req5xx": 0,
+        "others": 0,
+        "latency": {
+            "mean": 26781.203706,
+            "stddev": 22997.557615568614,
+            "max": 411666
+        },
+        "rps": {
+            "mean": 9340.837533290154,
+            "stddev": 9584.137759385345,
+            "max": 94349.7075159067,
+            "percentiles": {
+                "50": 5601.112941,
+                "75": 10975.865718,
+                "90": 23066.622597,
+                "95": 31941.618706,
+                "99": 44283.385259
+            }
+        }
+    }
+}
+</pre>
+
+<pre>
+./bombardier -c 250 -n 1000000 -t 2s -m GET --format=json --print=result http://localhost:8000
+{
+    "spec": {
+        "numberOfConnections": 250,
+        "testType": "number-of-requests",
+        "numberOfRequests": 1000000,
+        "method": "GET",
+        "url": "http://localhost:8000",
+        "body": "",
+        "stream": false,
+        "timeoutSeconds": 2,
+        "client": "fasthttp"
+    },
+    "result": {
+        "bytesRead": 145000000,
+        "bytesWritten": 62000000,
+        "timeTakenSeconds": 107.841094669,
+        "req1xx": 0,
+        "req2xx": 1000000,
+        "req3xx": 0,
+        "req4xx": 0,
+        "req5xx": 0,
+        "others": 0,
+        "latency": {
+            "mean": 26952.747026,
+            "stddev": 23414.414345814985,
+            "max": 428447
+        },
+        "rps": {
+            "mean": 9281.251427783433,
+            "stddev": 9328.011426637218,
+            "max": 61200.83609604398,
+            "percentiles": {
+                "50": 5602.390260,
+                "75": 10610.014262,
+                "90": 23184.574144,
+                "95": 32005.683331,
+                "99": 44063.807814
+            }
+        }
+    }
+}
+</pre>
+
+
+## net/http
+
+<pre>
+./bombardier -c 250 -n 1000000 -t 2s -m GET --format=json --print=result http: //localhost:8001 {
+    "spec": {
+        "numberOfConnections": 250,
+        "testType": "number-of-requests",
+        "numberOfRequests": 1000000,
+        "method": "GET",
+        "url": "http://localhost:8001",
+        "body": "",
+        "stream": false,
+        "timeoutSeconds": 2,
+        "client": "fasthttp"
+    },
+    "result": {
+        "bytesRead": 145000000,
+        "bytesWritten": 62000000,
+        "timeTakenSeconds": 8.726934813,
+        "req1xx": 0,
+        "req2xx": 1000000,
+        "req3xx": 0,
+        "req4xx": 0,
+        "req5xx": 0,
+        "others": 0,
+        "latency": {
+            "mean": 2177.562629,
+            "stddev": 2756.708943735606,
+            "max": 378265
+        },
+        "rps": {
+            "mean": 114499.25728361239,
+            "stddev": 36563.51662013037,
+            "max": 227890.0296801165,
+            "percentiles": {
+                "50": 109175.295286,
+                "75": 126683.321528,
+                "90": 154903.494817,
+                "95": 205733.240408,
+                "99": 223356.185248
+            }
+        }
+    }
+}
+</pre>
+
+<pre>
+./bombardier -c 250 -n 1000000 -t 2s -m GET --format=json --print=result http://localhost:8000
+{
+    "spec": {
+        "numberOfConnections": 250,
+        "testType": "number-of-requests",
+        "numberOfRequests": 1000000,
+        "method": "GET",
+        "url": "http://localhost:8000",
+        "body": "",
+        "stream": false,
+        "timeoutSeconds": 2,
+        "client": "fasthttp"
+    },
+    "result": {
+        "bytesRead": 145000000,
+        "bytesWritten": 62000000,
+        "timeTakenSeconds": 8.65911544,
+        "req1xx": 0,
+        "req2xx": 1000000,
+        "req3xx": 0,
+        "req4xx": 0,
+        "req5xx": 0,
+        "others": 0,
+        "latency": {
+            "mean": 2161.696671,
+            "stddev": 1580.54857192748,
+            "max": 312571
+        },
+        "rps": {
+            "mean": 115634.31880183771,
+            "stddev": 37743.161206949866,
+            "max": 242891.97748919396,
+            "percentiles": {
+                "50": 108831.994024,
+                "75": 128202.430586,
+                "90": 157456.349670,
+                "95": 213619.442361,
+                "99": 226316.059692
+            }
+        }
+    }
+}
+</pre>
+
+
+## dynamic link
+
+<pre>
+./bombardier -c 250 -n 1000000 -t 2s -m GET --format=json --print=result http: //localhost:8000 {
+    "spec": {
+        "numberOfConnections": 250,
+        "testType": "number-of-requests",
+        "numberOfRequests": 1000000,
+        "method": "GET",
+        "url": "http://localhost:8000",
+        "body": "",
+        "stream": false,
+        "timeoutSeconds": 2,
+        "client": "fasthttp"
+    },
+    "result": {
+        "bytesRead": 148000000,
+        "bytesWritten": 62000000,
+        "timeTakenSeconds": 9.396256281,
+        "req1xx": 0,
+        "req2xx": 1000000,
+        "req3xx": 0,
+        "req4xx": 0,
+        "req5xx": 0,
+        "others": 0,
+        "latency": {
+            "mean": 2345.293641,
+            "stddev": 1035.4104911253642,
+            "max": 149295
+        },
+        "rps": {
+            "mean": 106643.30925269087,
+            "stddev": 32115.927293774937,
+            "max": 228145.2141518713,
+            "percentiles": {
+                "50": 104755.421785,
+                "75": 119205.740579,
+                "90": 138220.233016,
+                "95": 155163.286997,
+                "99": 218838.723020
+            }
+        }
+    }
+}
+</pre>
+
+<pre>
+./bombardier -c 250 -n 1000000 -t 2s -m GET --format=json --print=result http: //localhost:8001 {
+    "spec": {
+        "numberOfConnections": 250,
+        "testType": "number-of-requests",
+        "numberOfRequests": 1000000,
+        "method": "GET",
+        "url": "http://localhost:8001",
+        "body": "",
+        "stream": false,
+        "timeoutSeconds": 2,
+        "client": "fasthttp"
+    },
+    "result": {
+        "bytesRead": 144000000,
+        "bytesWritten": 62000000,
+        "timeTakenSeconds": 9.396676089,
+        "req1xx": 0,
+        "req2xx": 1000000,
+        "req3xx": 0,
+        "req4xx": 0,
+        "req5xx": 0,
+        "others": 0,
+        "latency": {
+            "mean": 2345.402029,
+            "stddev": 1247.337426319483,
+            "max": 306599
+        },
+        "rps": {
+            "mean": 106501.08231872771,
+            "stddev": 29388.63826050861,
+            "max": 219146.16243420463,
+            "percentiles": {
+                "50": 102273.109413,
+                "75": 119974.975798,
+                "90": 140370.613575,
+                "95": 154750.100102,
+                "99": 212990.048477
+            }
+        }
+    }
+}
+</pre>
